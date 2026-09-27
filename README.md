@@ -7,6 +7,12 @@ Personal, machine-wide Claude Code tooling — installed into
 |---|---|
 | `keep-warm/` | Keeps an idle session's prompt cache warm with a few cheap pings, so coming back after a break does not re-write the whole context at the cache-write rate |
 | `statusline/` | Status line showing how full the session's context window is |
+| `handoff/` | `/handoff` skill: writes `HANDOFF.md` before a break, so the next session starts fresh from a short note instead of re-reading a cold context |
+
+Each tool stands alone — install any one without the others. They only need
+bash, `jq` (keep-warm, statusline) and Claude Code; no other service, account
+or repository. The one cross-tool touch is optional: keep-warm skips its pings
+when the session's last action wrote `HANDOFF.md`, whatever wrote it.
 
 Requirements: bash (macOS's stock 3.2 is fine), `jq`, Claude Code 2.1.281 or
 newer for keep-warm.
@@ -68,6 +74,18 @@ Install by copying it there and registering it in `~/.claude/settings.json`:
 ```
 
 `CLAUDE_CTX_WINDOW` is the model's context window in tokens.
+
+## handoff
+
+```bash
+mkdir -p ~/.claude/skills/handoff && cp handoff/SKILL.md ~/.claude/skills/handoff/
+```
+
+Make `/handoff` your last prompt before a break (`/handoff <task>` does the task
+first, then writes the note). Next time, start a NEW session and type
+`Read HANDOFF.md and continue.` — cheaper than resuming an old session whose
+cache has expired. The note lands in the project root; keep it out of git
+(add `HANDOFF.md` to `.gitignore`). Works in any directory, git repository or not.
 
 ## License
 

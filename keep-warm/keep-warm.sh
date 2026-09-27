@@ -20,8 +20,9 @@
 #   PostToolUse      a main-session tool call is activity that cancels an
 #                    armed wait (a subagent's is ignored — its requests never
 #                    refresh the main session's cache); also tracks "the last
-#                    main-session tool call wrote HANDOFF.md" — /m-handoff was
-#                    the developer's last prompt, they will start fresh.
+#                    main-session tool call wrote HANDOFF.md" — a handoff note
+#                    (e.g. /handoff) was the developer's last prompt, they will
+#                    start fresh.
 #   StopFailure      a turn ended in an API error after Claude Code's own
 #                    retries: stop the chain — the cache may already be gone,
 #                    and a ping would then pay the full rebuild while nobody
